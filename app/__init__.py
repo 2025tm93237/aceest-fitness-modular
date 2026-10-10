@@ -25,11 +25,14 @@ def create_app(db_path: Optional[str] = None) -> Flask:
     from app.blueprints.measurements import measurements_bp
     from app.blueprints.targets import targets_bp
     from app.blueprints.progress import progress_bp
+    from app.blueprints.exports import exports_bp
+    from app.blueprints.insights import insights_bp
 
     for bp in (
         core_bp, auth_bp, members_bp, plans_bp,
         nutrition_bp, membership_bp, movements_bp, sessions_bp,
-        measurements_bp, targets_bp, progress_bp,
+        measurements_bp, targets_bp, progress_bp, exports_bp,
+        insights_bp,
     ):
         app.register_blueprint(bp)
 
