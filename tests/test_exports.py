@@ -16,3 +16,4 @@ def test_pdf_export(client):
     assert response.status_code == 200
     assert response.headers["Content-Type"].startswith("application/pdf")
     assert response.data.startswith(b"%PDF")
+    assert client.get("/members/Nobody/report.pdf").status_code == 404
