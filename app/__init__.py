@@ -15,8 +15,11 @@ def create_app(db_path: Optional[str] = None) -> Flask:
     app.teardown_appcontext(close_db)
 
     from app.blueprints.core import core_bp
+    from app.blueprints.auth import auth_bp
 
-    for bp in (core_bp,):
+    for bp in (
+        core_bp, auth_bp,
+    ):
         app.register_blueprint(bp)
 
     init_db(app.config["DB_PATH"])
