@@ -17,9 +17,12 @@ def create_app(db_path: Optional[str] = None) -> Flask:
     from app.blueprints.core import core_bp
     from app.blueprints.auth import auth_bp
     from app.blueprints.members import members_bp
+    from app.blueprints.plans import plans_bp
+    from app.blueprints.nutrition import nutrition_bp
 
     for bp in (
-        core_bp, auth_bp, members_bp,
+        core_bp, auth_bp, members_bp, plans_bp,
+        nutrition_bp,
     ):
         app.register_blueprint(bp)
 
