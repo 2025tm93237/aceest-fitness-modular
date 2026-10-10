@@ -37,6 +37,8 @@ def export_csv(name):
 def report_pdf(name):
     db = get_db()
     member = member_row(db, name)
+    if member is None:
+        return fail("member not found", 404)
     buffer = io.BytesIO()
     pdf = canvas.Canvas(buffer, pagesize=A4)
     pdf.setTitle(f"ACEest Report - {name}")
