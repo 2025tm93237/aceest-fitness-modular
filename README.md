@@ -1,5 +1,4 @@
-# ACEest Fitness & Gym — DevOps Assignment 1 (Modular Build)
-
+# ACEest Fitness & Gym — DevOps Assignment 1 
 ## About This Project
 
 ACEest Fitness & Gym is a gym and fitness-management REST API built as a DevOps
@@ -78,9 +77,6 @@ curl -i -c cookies.txt -X POST http://127.0.0.1:5000/login \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}'
 ```
-
-These are dev-only seed credentials — not intended for any shared or production
-deployment.
 
 ---
 
