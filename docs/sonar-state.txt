@@ -1,0 +1,1 @@
+Sonar project: aceest-fitness-modular, scanned Mon Nov 23 05:29:24 PM IST 2026, server: http://localhost:9000
