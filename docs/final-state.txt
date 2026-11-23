@@ -1,0 +1,38 @@
+NAME                                    READY   STATUS             RESTARTS   AGE
+pod/aceest-fitness-6c79b444f7-n846q     1/1     Running            0          20m
+pod/aceest-fitness-6c79b444f7-xgf2m     1/1     Running            0          20m
+pod/aceest-shadow-86f65dc9bb-x7dhn      1/1     Running            0          5m46s
+pod/aceest-stable-7ffd6654d4-62mdf      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-877cq      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-8j25q      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-b897t      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-bhxrz      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-cjb9d      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-k5gxf      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-ndv8z      0/1     ImagePullBackOff   0          11m
+pod/aceest-stable-7ffd6654d4-wd7v4      0/1     ImagePullBackOff   0          11m
+pod/aceest-variant-a-64bfb584fb-7ln5f   0/1     ImagePullBackOff   0          2m58s
+pod/aceest-variant-b-849fcd89f6-6zrwv   1/1     Running            0          2m49s
+
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/aceest-fitness     NodePort    10.106.83.247   <none>        5000:30080/TCP   44m
+service/aceest-shadow      ClusterIP   10.104.35.56    <none>        5000/TCP         5m46s
+service/aceest-variant-a   NodePort    10.105.60.233   <none>        5000:30081/TCP   2m58s
+service/aceest-variant-b   NodePort    10.99.63.124    <none>        5000:30082/TCP   2m49s
+service/kubernetes         ClusterIP   10.96.0.1       <none>        443/TCP          45m
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/aceest-canary      0/0     0            0           11m
+deployment.apps/aceest-fitness     2/2     2            2           20m
+deployment.apps/aceest-shadow      1/1     1            1           5m46s
+deployment.apps/aceest-stable      0/9     9            0           11m
+deployment.apps/aceest-variant-a   0/1     1            0           2m58s
+deployment.apps/aceest-variant-b   1/1     1            1           2m49s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/aceest-canary-64cd59775d      0         0         0       11m
+replicaset.apps/aceest-fitness-6c79b444f7     2         2         2       20m
+replicaset.apps/aceest-shadow-86f65dc9bb      1         1         1       5m46s
+replicaset.apps/aceest-stable-7ffd6654d4      9         9         0       11m
+replicaset.apps/aceest-variant-a-64bfb584fb   1         1         0       2m58s
+replicaset.apps/aceest-variant-b-849fcd89f6   1         1         1       2m49s
