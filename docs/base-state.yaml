@@ -1,0 +1,505 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2026-11-23T12:36:39Z"
+    generateName: aceest-fitness-6c79b444f7-
+    generation: 1
+    labels:
+      app: aceest
+      pod-template-hash: 6c79b444f7
+      version: stable
+    name: aceest-fitness-6c79b444f7-mv6cn
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: aceest-fitness-6c79b444f7
+      uid: a51a0a24-51de-427b-b1c5-8e7ddd0cee3e
+    resourceVersion: "897"
+    uid: 6f6e3c58-9671-4a83-a1fb-0a7dd9fe4bb7
+  spec:
+    containers:
+    - image: localhost:5050/aceest-fitness-modular:v1.2
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 5000
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: aceest-fitness
+      ports:
+      - containerPort: 5000
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rdz2d
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-rdz2d
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:36:40Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:36:39Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:40:49Z"
+      observedGeneration: 1
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:40:49Z"
+      observedGeneration: 1
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:36:39Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://80f05a3f2ac79ef2059e1fb36d8e7d8e79f71efab50c0c6909574ea44ed351ac
+      image: localhost:5050/aceest-fitness-modular:v1.2
+      imageID: sha256:33f7b12a2039871ae4036c33d6a2ce233341b4416fe6a5955924f12f4425f5cb
+      lastState: {}
+      name: aceest-fitness
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-11-23T12:40:49Z"
+      user:
+        linux:
+          gid: 1000
+          supplementalGroups:
+          - 1000
+          uid: 1000
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-rdz2d
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.49.2
+    hostIPs:
+    - ip: 192.168.49.2
+    observedGeneration: 1
+    phase: Running
+    podIP: 10.244.0.3
+    podIPs:
+    - ip: 10.244.0.3
+    qosClass: BestEffort
+    resources: {}
+    startTime: "2026-11-23T12:36:39Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2026-11-23T12:36:39Z"
+    generateName: aceest-fitness-6c79b444f7-
+    generation: 1
+    labels:
+      app: aceest
+      pod-template-hash: 6c79b444f7
+      version: stable
+    name: aceest-fitness-6c79b444f7-psx2z
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: aceest-fitness-6c79b444f7
+      uid: a51a0a24-51de-427b-b1c5-8e7ddd0cee3e
+    resourceVersion: "913"
+    uid: a611c7ab-81ea-4554-b472-8d8b515f7abd
+  spec:
+    containers:
+    - image: localhost:5050/aceest-fitness-modular:v1.2
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: 5000
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: aceest-fitness
+      ports:
+      - containerPort: 5000
+        protocol: TCP
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-k55d7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: minikube
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-k55d7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:36:40Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:36:39Z"
+      observedGeneration: 1
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:40:57Z"
+      observedGeneration: 1
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:40:57Z"
+      observedGeneration: 1
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-23T12:36:39Z"
+      observedGeneration: 1
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://264885de9ff59080913cde4c8dd2b0ed05c991b10d0fe66f52ef6140500aced8
+      image: localhost:5050/aceest-fitness-modular:v1.2
+      imageID: sha256:33f7b12a2039871ae4036c33d6a2ce233341b4416fe6a5955924f12f4425f5cb
+      lastState: {}
+      name: aceest-fitness
+      ready: true
+      resources: {}
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2026-11-23T12:40:57Z"
+      user:
+        linux:
+          gid: 1000
+          supplementalGroups:
+          - 1000
+          uid: 1000
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-k55d7
+        readOnly: true
+        recursiveReadOnly: Disabled
+    hostIP: 192.168.49.2
+    hostIPs:
+    - ip: 192.168.49.2
+    observedGeneration: 1
+    phase: Running
+    podIP: 10.244.0.4
+    podIPs:
+    - ip: 10.244.0.4
+    qosClass: BestEffort
+    resources: {}
+    startTime: "2026-11-23T12:36:39Z"
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"aceest-fitness","namespace":"default"},"spec":{"ports":[{"nodePort":30080,"port":5000,"targetPort":5000}],"selector":{"app":"aceest"},"type":"NodePort"}}
+    creationTimestamp: "2026-11-23T12:36:39Z"
+    name: aceest-fitness
+    namespace: default
+    resourceVersion: "537"
+    uid: 6175f370-7f84-4afa-8ea0-636c580e89af
+  spec:
+    clusterIP: 10.96.43.105
+    clusterIPs:
+    - 10.96.43.105
+    externalTrafficPolicy: Cluster
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - nodePort: 30080
+      port: 5000
+      protocol: TCP
+      targetPort: 5000
+    selector:
+      app: aceest
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2026-11-23T12:35:07Z"
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "215"
+    uid: fd8117ca-a872-4b58-b87a-5e607b383323
+  spec:
+    clusterIP: 10.96.0.1
+    clusterIPs:
+    - 10.96.0.1
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"aceest"},"name":"aceest-fitness","namespace":"default"},"spec":{"replicas":2,"selector":{"matchLabels":{"app":"aceest"}},"template":{"metadata":{"labels":{"app":"aceest","version":"stable"}},"spec":{"containers":[{"image":"localhost:5050/aceest-fitness-modular:v1.2","livenessProbe":{"httpGet":{"path":"/health","port":5000},"initialDelaySeconds":5,"periodSeconds":10},"name":"aceest-fitness","ports":[{"containerPort":5000}]}]}}}}
+    creationTimestamp: "2026-11-23T12:36:39Z"
+    generation: 1
+    labels:
+      app: aceest
+    name: aceest-fitness
+    namespace: default
+    resourceVersion: "917"
+    uid: 13e77635-9257-48e4-a43b-eee55f84f4d3
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: aceest
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: aceest
+          version: stable
+      spec:
+        containers:
+        - image: localhost:5050/aceest-fitness-modular:v1.2
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 5000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: aceest-fitness
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2026-11-23T12:40:57Z"
+      lastUpdateTime: "2026-11-23T12:40:57Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-23T12:36:39Z"
+      lastUpdateTime: "2026-11-23T12:40:57Z"
+      message: ReplicaSet "aceest-fitness-6c79b444f7" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 2
+    replicas: 2
+    terminatingReplicas: 0
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2026-11-23T12:36:39Z"
+    generation: 1
+    labels:
+      app: aceest
+      pod-template-hash: 6c79b444f7
+      version: stable
+    name: aceest-fitness-6c79b444f7
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: aceest-fitness
+      uid: 13e77635-9257-48e4-a43b-eee55f84f4d3
+    resourceVersion: "914"
+    uid: a51a0a24-51de-427b-b1c5-8e7ddd0cee3e
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: aceest
+        pod-template-hash: 6c79b444f7
+    template:
+      metadata:
+        labels:
+          app: aceest
+          pod-template-hash: 6c79b444f7
+          version: stable
+      spec:
+        containers:
+        - image: localhost:5050/aceest-fitness-modular:v1.2
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 5000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: aceest-fitness
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 1
+    readyReplicas: 2
+    replicas: 2
+    terminatingReplicas: 0
+kind: List
+metadata:
+  resourceVersion: ""
