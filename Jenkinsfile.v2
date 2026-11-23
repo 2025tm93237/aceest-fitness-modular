@@ -1,0 +1,65 @@
+pipeline {
+  agent any
+
+  environment {
+    // These two values get filled in from Jenkins "Credentials" in Session 4 (T+20–30) —
+    // you don't type real values here, Jenkins substitutes them at build time.
+    SONAR_HOST  = credentials('sonar-host-url')
+    SONAR_TOKEN = credentials('sonar-token')
+  }
+
+  stages {
+    stage('Checkout') {
+      // Pulls the latest code from GitHub — this is always the first stage.
+      steps { checkout scm }
+    }
+
+    stage('Lint') {
+      // Checks the Python code follows style rules (flake8). Same tool you used in Assignment 1.
+      steps { sh 'flake8 app tests' }
+    }
+
+    stage('Unit Tests') {
+      // Runs the Pytest suite with a coverage report, same as Assignment 1.
+      steps { sh 'pytest -v --cov=app' }
+    }
+
+    stage('SonarQube Scan') {
+      // Sends the code to the SonarQube server (started in Session 3) for static analysis.
+      steps { sh 'sonar-scanner -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN' }
+    }
+
+    stage('Quality Gate') {
+      // Asks SonarQube "did the scan above pass or fail your quality rules?" and waits up to
+      // 5 minutes for the answer. abortPipeline: true means a failed gate stops the build here.
+      steps {
+        timeout(time: 5, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
+
+    stage('Docker Build') {
+      // Builds the container image and tags it with Jenkins' own build number, e.g. "build-17".
+      steps { sh 'docker build -t localhost:5050/aceest-fitness-modular:${BUILD_TAG} .' }
+    }
+
+    stage('Podman Build') {
+      // Same image, built a second time with Podman, to satisfy the "Docker or Podman" /
+      // "both tools" requirement from the brief.
+      steps { sh 'podman build -t localhost:5050/aceest-fitness-modular:${BUILD_TAG}-podman .' }
+    }
+
+    stage('Push Registry') {
+      // Uploads the image to your local registry container (set up in Session 2) so Kubernetes
+      // can pull it from there in the next stage.
+      steps { sh 'docker push localhost:5050/aceest-fitness-modular:${BUILD_TAG}' }
+    }
+
+    stage('Deploy') {
+      // Applies the Kubernetes manifests from k8s/base/ — this is the "Deploy" box in the
+      // Stage View, and what actually puts the new image onto the cluster.
+      steps { sh 'kubectl apply -f k8s/base/' }
+    }
+  }
+}
