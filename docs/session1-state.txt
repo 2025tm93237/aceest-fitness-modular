@@ -1,0 +1,5 @@
+ee92cec Merge pull request #2 from 2025tm93237/assignment2-dev
+a9676fb a2: pipeline-as-code scaffolding (Jenkinsfile, SonarQube config, k8s manifests)
+298a8c4 Update README.md
+c22546a Update README.md
+670aa33 Merge branch 'docs/operator-guide'
