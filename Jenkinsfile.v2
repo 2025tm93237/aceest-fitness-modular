@@ -85,7 +85,7 @@ pipeline {
     }
 
     stage('Deploy') {
-      steps { sh 'kubectl apply -f k8s/base/' }
+      steps { sh 'KUBECONFIG=/etc/kube-ci/config /usr/local/bin/kubectl apply -f k8s/base/' }
     }
   }
 }
