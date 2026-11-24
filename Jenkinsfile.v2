@@ -1,13 +1,6 @@
 pipeline {
   agent any
 
-  environment {
-    // These two values get filled in from Jenkins "Credentials" in Session 4 (T+20–30) —
-    // you don't type real values here, Jenkins substitutes them at build time.
-    SONAR_HOST  = credentials('sonar-host-url')
-    SONAR_TOKEN = credentials('sonar-token')
-  }
-
   stages {
     stage('Checkout') {
       // Pulls the latest code from GitHub — this is always the first stage.
@@ -25,13 +18,21 @@ pipeline {
     }
 
     stage('SonarQube Scan') {
-      // Sends the code to the SonarQube server (started in Session 3) for static analysis.
-      steps { sh 'sonar-scanner -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN' }
+      // withSonarQubeEnv reads the server URL + token from Jenkins' own config (set up in
+      // Session 4) and injects them as environment variables for the sonar-scanner command —
+      // nothing is typed or stored here, which is why this stage has no visible token.
+      steps {
+        withSonarQubeEnv('My SonarQube Server') {
+          sh 'sonar-scanner'
+        }
+      }
     }
 
     stage('Quality Gate') {
       // Asks SonarQube "did the scan above pass or fail your quality rules?" and waits up to
       // 5 minutes for the answer. abortPipeline: true means a failed gate stops the build here.
+      // This step needs a webhook configured on the SonarQube side (set up in Session 4) —
+      // without it, this stage will hang until the 5-minute timeout and then fail.
       steps {
         timeout(time: 5, unit: 'MINUTES') {
           waitForQualityGate abortPipeline: true
