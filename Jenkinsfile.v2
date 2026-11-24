@@ -3,24 +3,39 @@ pipeline {
 
   stages {
     stage('Checkout') {
-      // Pulls the latest code from GitHub — this is always the first stage.
       steps { checkout scm }
     }
 
+    stage('Setup Environment') {
+      steps {
+        sh '''
+          python3 -m venv venv
+          . venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+        '''
+      }
+    }
+
     stage('Lint') {
-      // Checks the Python code follows style rules (flake8). Same tool you used in Assignment 1.
-      steps { sh 'flake8 app tests' }
+      steps {
+        sh '''
+          . venv/bin/activate
+          flake8 app tests
+        '''
+      }
     }
 
     stage('Unit Tests') {
-      // Runs the Pytest suite with a coverage report, same as Assignment 1.
-      steps { sh 'pytest -v --cov=app' }
+      steps {
+        sh '''
+          . venv/bin/activate
+          pytest -v --cov=app
+        '''
+      }
     }
 
     stage('SonarQube Scan') {
-      // withSonarQubeEnv reads the server URL + token from Jenkins' own config (set up in
-      // Session 4) and injects them as environment variables for the sonar-scanner command —
-      // nothing is typed or stored here, which is why this stage has no visible token.
       steps {
         withSonarQubeEnv('My SonarQube Server') {
           sh 'sonar-scanner'
@@ -29,10 +44,6 @@ pipeline {
     }
 
     stage('Quality Gate') {
-      // Asks SonarQube "did the scan above pass or fail your quality rules?" and waits up to
-      // 5 minutes for the answer. abortPipeline: true means a failed gate stops the build here.
-      // This step needs a webhook configured on the SonarQube side (set up in Session 4) —
-      // without it, this stage will hang until the 5-minute timeout and then fail.
       steps {
         timeout(time: 5, unit: 'MINUTES') {
           waitForQualityGate abortPipeline: true
@@ -41,25 +52,18 @@ pipeline {
     }
 
     stage('Docker Build') {
-      // Builds the container image and tags it with Jenkins' own build number, e.g. "build-17".
       steps { sh 'docker build -t localhost:5050/aceest-fitness-modular:${BUILD_TAG} .' }
     }
 
     stage('Podman Build') {
-      // Same image, built a second time with Podman, to satisfy the "Docker or Podman" /
-      // "both tools" requirement from the brief.
-      steps { sh 'podman build -t localhost:5050/aceest-fitness-modular:${BUILD_TAG}-podman .' }
+      steps { sh 'sudo podman build -t localhost:5050/aceest-fitness-modular:${BUILD_TAG}-podman .' }
     }
 
     stage('Push Registry') {
-      // Uploads the image to your local registry container (set up in Session 2) so Kubernetes
-      // can pull it from there in the next stage.
       steps { sh 'docker push localhost:5050/aceest-fitness-modular:${BUILD_TAG}' }
     }
 
     stage('Deploy') {
-      // Applies the Kubernetes manifests from k8s/base/ — this is the "Deploy" box in the
-      // Stage View, and what actually puts the new image onto the cluster.
       steps { sh 'kubectl apply -f k8s/base/' }
     }
   }
