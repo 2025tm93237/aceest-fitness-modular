@@ -35,10 +35,31 @@ pipeline {
       }
     }
 
-    stage('SonarQube Scan') {
+    stage('SonarQube Scan & Quality Gate') {
       steps {
         withSonarQubeEnv('My SonarQube Server') {
           sh "${tool 'sonar-scanner'}/bin/sonar-scanner"
+          sh '''
+            CE_TASK_URL=$(grep ceTaskUrl .scannerwork/report-task.txt | cut -d'=' -f2-)
+            STATUS="PENDING"
+            for i in $(seq 1 20); do
+              STATUS=$(curl -s -u "$SONAR_AUTH_TOKEN": "$CE_TASK_URL" | grep -o '"status":"[A-Z]*"' | head -1 | cut -d'"' -f4)
+              echo "CE task status: $STATUS"
+              if [ "$STATUS" = "SUCCESS" ] || [ "$STATUS" = "FAILED" ] || [ "$STATUS" = "CANCELED" ]; then break; fi
+              sleep 3
+            done
+            if [ "$STATUS" != "SUCCESS" ]; then
+              echo "SonarQube analysis task did not finish successfully: $STATUS"
+              exit 1
+            fi
+            ANALYSIS_ID=$(curl -s -u "$SONAR_AUTH_TOKEN": "$CE_TASK_URL" | grep -o '"analysisId":"[^"]*"' | cut -d'"' -f4)
+            GATE_STATUS=$(curl -s -u "$SONAR_AUTH_TOKEN": "$SONAR_HOST_URL/api/qualitygates/project_status?analysisId=$ANALYSIS_ID" | grep -o '"status":"[A-Z]*"' | head -1 | cut -d'"' -f4)
+            echo "Quality Gate status: $GATE_STATUS"
+            if [ "$GATE_STATUS" != "OK" ]; then
+              echo "Quality Gate failed: $GATE_STATUS"
+              exit 1
+            fi
+          '''
         }
       }
     }
